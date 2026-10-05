@@ -1,12 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchForm from "./components/SearchForm";
-import { getWeather } from "./services/weatherApi";
 import WeatherCard from "./components/WeatherCard";
+import SearchHistory from "./components/SearchHistory";
+import { getWeather } from "./services/weatherApi";
 
 function App() {
     const [loading, setLoading] = useState(false);
     const [weather, setWeather] = useState(null);
     const [error, setError] = useState("");
+    const [history, setHistory] = useState(() => {
+        const savedHistory = localStorage.getItem("weatherSearchHistory");
+
+        return savedHistory ? JSON.parse(savedHistory) : [];
+    });
+
+    useEffect(() => {
+        localStorage.setItem("weatherSearchHistory", JSON.stringify(history));
+    }, [history]);
 
     async function handleSearch({ city, country }) {
         if (!city || !country) {
@@ -21,6 +31,15 @@ function App() {
             const data = await getWeather(city, country);
 
             setWeather(data);
+
+            const newHistoryItem = {
+                id: crypto.randomUUID(),
+                city: data.name,
+                country: data.sys.country,
+                searchedAt: new Date().toISOString(),
+            };
+
+            setHistory((currentHistory) => [newHistoryItem, ...currentHistory]);
         } catch (error) {
             setWeather(null);
             setError(error.message);
@@ -33,6 +52,19 @@ function App() {
         setWeather(null);
         setError("");
         console.log("Cleared");
+    }
+
+    function handleSearchAgain(item) {
+        handleSearch({
+            city: item.city,
+            country: item.country,
+        });
+    }
+
+    function handleDelete(id) {
+        setHistory((currentHistory) =>
+            currentHistory.filter((item) => item.id !== id)
+        );
     }
 
     return (
@@ -48,6 +80,12 @@ function App() {
             {error && <p>{error}</p>}
 
             {weather && <WeatherCard weather={weather} />}
+
+            <SearchHistory
+                history={history}
+                onSearchAgain={handleSearchAgain}
+                onDelete={handleDelete}
+            />
         </main>
     );
 }
