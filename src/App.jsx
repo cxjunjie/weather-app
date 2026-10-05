@@ -39,7 +39,19 @@ function App() {
                 searchedAt: new Date().toISOString(),
             };
 
-            setHistory((currentHistory) => [newHistoryItem, ...currentHistory]);
+            setHistory((currentHistory) => {
+                const filteredHistory = currentHistory.filter(
+                    (item) =>
+                        !(
+                            item.city.toLowerCase() ===
+                                data.name.toLowerCase() &&
+                            item.country.toLowerCase() ===
+                                data.sys.country.toLowerCase()
+                        )
+                );
+
+                return [newHistoryItem, ...filteredHistory];
+            });
         } catch (error) {
             setWeather(null);
             setError(error.message);

@@ -1,3 +1,5 @@
+import { formatDate } from "../utils/formatDate";
+
 function SearchHistory({ history, onSearchAgain, onDelete }) {
     if (history.length === 0) {
         return null;
@@ -12,6 +14,8 @@ function SearchHistory({ history, onSearchAgain, onDelete }) {
                     <span>
                         {item.city}, {item.country}
                     </span>
+
+                    <span>{formatDate(item.searchedAt)}</span>
 
                     <button type="button" onClick={() => onSearchAgain(item)}>
                         Search Again
