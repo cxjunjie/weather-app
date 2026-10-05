@@ -22,8 +22,8 @@ function SearchForm({ onSearch, onClear, loading }) {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
+        <form className="search-form" onSubmit={handleSubmit}>
+            <div className="search-form__field">
                 <label htmlFor="city">City</label>
                 <input
                     id="city"
@@ -34,7 +34,7 @@ function SearchForm({ onSearch, onClear, loading }) {
                 />
             </div>
 
-            <div>
+            <div className="search-form__field">
                 <label htmlFor="country">Country</label>
                 <input
                     id="country"
@@ -45,13 +45,14 @@ function SearchForm({ onSearch, onClear, loading }) {
                 />
             </div>
 
-            <button type="submit" disabled={loading}>
-                {loading ? "Searching..." : "Search"}
-            </button>
-
-            <button type="button" onClick={handleClear}>
-                Clear
-            </button>
+            <div className="search-form__actions">
+                <button type="submit" disabled={loading}>
+                    {loading ? "Searching..." : "Search"}
+                </button>
+                <button type="button" onClick={handleClear}>
+                    Clear
+                </button>
+            </div>
         </form>
     );
 }

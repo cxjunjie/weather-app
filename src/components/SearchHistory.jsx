@@ -6,24 +6,29 @@ function SearchHistory({ history, onSearchAgain, onDelete }) {
     }
 
     return (
-        <section>
+        <section className="search-history">
             <h2>Search History</h2>
 
             {history.map((item) => (
-                <div key={item.id}>
-                    <span>
-                        {item.city}, {item.country}
-                    </span>
+                <div className="search-history__item" key={item.id}>
+                    <div className="search-history__details">
+                        <span>
+                            {item.city}, {item.country}
+                        </span>
+                        <span>{formatDate(item.searchedAt)}</span>
+                    </div>
 
-                    <span>{formatDate(item.searchedAt)}</span>
-
-                    <button type="button" onClick={() => onSearchAgain(item)}>
-                        Search Again
-                    </button>
-
-                    <button type="button" onClick={() => onDelete(item.id)}>
-                        Delete
-                    </button>
+                    <div className="search-history__actions">
+                        <button
+                            type="button"
+                            onClick={() => onSearchAgain(item)}
+                        >
+                            Search Again
+                        </button>
+                        <button type="button" onClick={() => onDelete(item.id)}>
+                            Delete
+                        </button>
+                    </div>
                 </div>
             ))}
         </section>
