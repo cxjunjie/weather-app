@@ -1,16 +1,53 @@
-# React + Vite
+# Today's Weather
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive weather application built with ReactJS that allows users to search for current weather information by city and country.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Search current weather by city and country
+- Display temperature, high/low temperature, humidity and weather condition
+- Persistent Search history with localStorage
+- Search previous locations again
+- Delete individual history records
+- Clear the current search
+- Handle invalid locations and API errors
+- Responsive layout for Desktop and Mobile
+- Light and Dark theme
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- ReactJs
+- Vite
+- JS
+- CSS
+- OpenWeather API
+- Lucide React
 
-## Expanding the ESLint configuration
+## Setup
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Clone the repository
+git clone <your-repository-url>
+cd weather-app
+
+2. npm install
+
+3. Create a .env file in project root
+VITE_OPENWEATHER_API_KEY=your_openweather_api_key
+
+4. Start the development server
+npm run dev
+
+## Assumptions
+
+- Both city and country are required before a search is performed.
+- Successful searches are added to search history.
+- Searching the same location again updates it and moves it to the top instead of creating a duplicate.
+- Search history remains after page refresh using localStorage.
+- - Selected Light/Dark theme is saved using localStorage.
+- Search Again button performs a new API request.
+- Clear button clears search fields, current weather result and error message but not search history.
+- History records can be removed individually using the delete button.
+
+## API
+
+Weather data is retrieved from the OpenWeather Current Weather API. API requests would ideally be handled through a backend service to avoid exposing the key in the browser.
