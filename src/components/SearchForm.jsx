@@ -7,6 +7,8 @@ function SearchForm({ onSearch, onClear, loading }) {
     function handleSubmit(event) {
         event.preventDefault();
 
+        console.log(city, country);
+
         onSearch({
             city: city.trim(),
             country: country.trim(),
