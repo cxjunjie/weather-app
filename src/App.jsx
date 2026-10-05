@@ -3,6 +3,7 @@ import SearchForm from "./components/SearchForm";
 import WeatherCard from "./components/WeatherCard";
 import SearchHistory from "./components/SearchHistory";
 import { getWeather } from "./services/weatherApi";
+import ErrorMessage from "./components/ErrorMessage";
 
 function App() {
     const [loading, setLoading] = useState(false);
@@ -19,8 +20,18 @@ function App() {
     }, [history]);
 
     async function handleSearch({ city, country }) {
-        if (!city || !country) {
-            setError("Please enter both city and country.");
+        if (!city && !country) {
+            setError("Please enter a city and country.");
+            return;
+        }
+
+        if (!city) {
+            setError("Please enter a city.");
+            return;
+        }
+
+        if (!country) {
+            setError("Please enter a country.");
             return;
         }
 
@@ -89,7 +100,7 @@ function App() {
                 loading={loading}
             />
 
-            {error && <p>{error}</p>}
+            <ErrorMessage message={error} />
 
             {weather && <WeatherCard weather={weather} />}
 

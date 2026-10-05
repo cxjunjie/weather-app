@@ -149,6 +149,15 @@ button:disabled {
     gap: 0.5rem;
 }
 
+.error-message {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    background: #fdecec;
+    color: #a12622;
+    font-weight: 500;
+}
+
 @media (max-width: 600px) {
     main {
         width: min(100% - 1.5rem, 720px);
