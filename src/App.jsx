@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SearchForm from "./components/SearchForm";
 import { getWeather } from "./services/weatherApi";
+import WeatherCard from "./components/WeatherCard";
 
 function App() {
     const [loading, setLoading] = useState(false);
@@ -46,19 +47,7 @@ function App() {
 
             {error && <p>{error}</p>}
 
-            {weather && (
-                <div>
-                    <h2>
-                        {weather.name}, {weather.sys.country}
-                    </h2>
-
-                    <p>{Math.round(weather.main.temp)}°C</p>
-
-                    <p>{weather.weather[0].description}</p>
-
-                    <p>Humidity: {weather.main.humidity}%</p>
-                </div>
-            )}
+            {weather && <WeatherCard weather={weather} />}
         </main>
     );
 }
