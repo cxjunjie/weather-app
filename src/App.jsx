@@ -4,6 +4,7 @@ import WeatherCard from "./components/WeatherCard";
 import SearchHistory from "./components/SearchHistory";
 import { getWeather } from "./services/weatherApi";
 import ErrorMessage from "./components/ErrorMessage";
+import ThemeToggle from "./components/ThemeToggle";
 
 function App() {
     const [loading, setLoading] = useState(false);
@@ -15,9 +16,24 @@ function App() {
         return savedHistory ? JSON.parse(savedHistory) : [];
     });
 
+    const [theme, setTheme] = useState(() => {
+        return localStorage.getItem("theme") || "light";
+    });
+
     useEffect(() => {
         localStorage.setItem("weatherSearchHistory", JSON.stringify(history));
     }, [history]);
+
+    useEffect(() => {
+        document.documentElement.dataset.theme = theme;
+        localStorage.setItem("theme", theme);
+    }, [theme]);
+
+    function handleThemeToggle() {
+        setTheme((currentTheme) =>
+            currentTheme === "light" ? "dark" : "light"
+        );
+    }
 
     async function handleSearch({ city, country }) {
         if (!city && !country) {
@@ -93,6 +109,8 @@ function App() {
     return (
         <main>
             <h1>Today&apos;s Weather</h1>
+
+            <ThemeToggle theme={theme} onToggle={handleThemeToggle} />
 
             <SearchForm
                 onSearch={handleSearch}

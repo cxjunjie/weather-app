@@ -1,3 +1,4 @@
+import { Search, Trash2 } from "lucide-react";
 import { formatDate } from "../utils/formatDate";
 
 function SearchHistory({ history, onSearchAgain, onDelete }) {
@@ -12,21 +13,32 @@ function SearchHistory({ history, onSearchAgain, onDelete }) {
             {history.map((item) => (
                 <div className="search-history__item" key={item.id}>
                     <div className="search-history__details">
-                        <span>
+                        <strong>
                             {item.city}, {item.country}
-                        </span>
+                        </strong>
+
                         <span>{formatDate(item.searchedAt)}</span>
                     </div>
 
                     <div className="search-history__actions">
                         <button
                             type="button"
+                            className="icon-button"
                             onClick={() => onSearchAgain(item)}
+                            aria-label={`Search ${item.city} again`}
+                            title="Search again"
                         >
-                            Search Again
+                            <Search size={18} />
                         </button>
-                        <button type="button" onClick={() => onDelete(item.id)}>
-                            Delete
+
+                        <button
+                            type="button"
+                            className="icon-button"
+                            onClick={() => onDelete(item.id)}
+                            aria-label={`Delete ${item.city} from history`}
+                            title="Delete"
+                        >
+                            <Trash2 size={18} />
                         </button>
                     </div>
                 </div>
